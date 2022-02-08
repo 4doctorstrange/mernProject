@@ -37,7 +37,6 @@ export const Navbar = () => {
             <li className="nav-item">
               <Link to="/" className="nav-link active" aria-current="page"> About</Link>
             </li>
-
             {
               token ?
                 

@@ -1,5 +1,6 @@
 const Email = require('mongoose-type-email')
 const User = require('../models/user.js')
+const Post = require('../models/post.js')
 const jwt = require('jsonwebtoken')
 
 class UserController{  
@@ -64,6 +65,23 @@ class UserController{
         }
     }
     
+    static deleteUser = async (req,res) =>{
+        try {
+            const id = req.params.id
+            //firstly we will delete all the posts of that user
+            const post_del  = await Post.deleteMany({"author": id})
+            //Now deleting the user
+            const user_del = await User.findByIdAndDelete(id)
+            res.status(200).json({"msg":"User and all his/her posts are deleted "})
+
+            
+        } catch (error) {
+            console.log(error)
+            res.status(400).json(error)
+            
+        }
+    }
+
 }
 
 module.exports = UserController
